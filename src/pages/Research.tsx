@@ -1,10 +1,91 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Lightbulb, Link2 } from 'lucide-react';
+import { getCachedPublications } from '../utils/dblpCache';
+
+interface Publication {
+  title: string;
+  authors: string[];
+  venue: string;
+  year: number;
+  type: string;
+  url?: string;
+  ee?: string;
+  areas?: string[];
+}
+
+// Classification system for 3 core research areas
+const classifyPublication = (publication: Publication): string[] => {
+  const title = publication.title.toLowerCase();
+  const venue = publication.venue.toLowerCase();
+  
+  const areas = {
+    'Computer Architecture': [
+      'architecture', 'processor', 'cpu', 'gpu', 'hardware', 'memory', 'cache',
+      'accelerator', 'chip', 'silicon', 'fpga', 'asic', 'microarchitecture',
+      'performance', 'energy', 'power', 'multicore', 'parallel', 'embedded',
+      'mobile', 'iot', 'edge computing'
+    ],
+    'Machine Learning Systems': [
+      'machine learning', 'ml', 'deep learning', 'neural', 'ai', 'artificial intelligence',
+      'tinyml', 'inference', 'training', 'model', 'benchmark', 'mlperf',
+      'distributed learning', 'framework', 'system', 'edge ai', 'dataset'
+    ],
+    'Autonomous Agents': [
+      'autonomous', 'robot', 'robotics', 'agent', 'uav', 'drone', 'control',
+      'navigation', 'planning', 'safety', 'fault', 'real-time', 'multi-agent',
+      'coordination', 'decision making', 'embodied', 'ros'
+    ]
+  };
+  
+  const matchedAreas: string[] = [];
+  
+  for (const [area, keywords] of Object.entries(areas)) {
+    let score = 0;
+    for (const keyword of keywords) {
+      if (title.includes(keyword)) score += 3;
+      if (venue.includes(keyword)) score += 1;
+    }
+    if (score >= 2) {
+      matchedAreas.push(area);
+    }
+  }
+  
+  return matchedAreas.length > 0 ? matchedAreas : ['Machine Learning Systems'];
+};
 
 function Research() {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const loadPublications = async () => {
+    try {
+      setLoading(true);
+      const pubs = await getCachedPublications();
+      const classifiedPubs = pubs.map(pub => ({
+        ...pub,
+        areas: classifyPublication(pub)
+      }));
+      setPublications(classifiedPubs);
+    } catch (err) {
+      console.error('Error loading publications:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPublications();
+  }, []);
+
+  const getRecentPublicationsForArea = (area: string) => {
+    return publications
+      .filter(pub => pub.areas?.includes(area))
+      .sort((a, b) => b.year - a.year)
+      .slice(0, 3);
+  };
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => 
@@ -63,12 +144,36 @@ function Research() {
                 <p className="text-gray-600 mb-4">
                   Building efficient and reliable computing systems from the ground up.
                 </p>
-                <ul className="text-sm text-gray-500 space-y-1">
+                <ul className="text-sm text-gray-500 space-y-1 mb-6">
                   <li>• Energy-efficient processors</li>
                   <li>• Memory system optimization</li>
                   <li>• Hardware-software co-design</li>
                   <li>• Performance analysis</li>
                 </ul>
+                
+                {/* Recent Publications */}
+                <div className="border-t border-gray-200 pt-4">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
+                  {loading ? (
+                    <div className="text-sm text-gray-500">Loading...</div>
+                  ) : (
+                    <>
+                      {getRecentPublicationsForArea('Computer Architecture').map((pub, index) => (
+                        <div key={index} className="mb-2">
+                          <p className="text-xs text-gray-600 line-clamp-1">
+                            {pub.title} ({pub.year}, {pub.venue})
+                          </p>
+                        </div>
+                      ))}
+                      <Link 
+                        to="/publications?area=Computer Architecture"
+                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
+                      >
+                        View all Computer Architecture publications →
+                      </Link>
+                    </>
+                  )}
+                </div>
               </motion.div>
 
               {/* ML Systems */}
@@ -86,12 +191,36 @@ function Research() {
                 <p className="text-gray-600 mb-4">
                   Combining machine learning with systems research for intelligent edge computing.
                 </p>
-                <ul className="text-sm text-gray-500 space-y-1">
+                <ul className="text-sm text-gray-500 space-y-1 mb-6">
                   <li>• TinyML and edge inference</li>
                   <li>• Runtime optimization</li>
                   <li>• ML benchmarking</li>
                   <li>• Data-centric AI systems</li>
                 </ul>
+                
+                {/* Recent Publications */}
+                <div className="border-t border-gray-200 pt-4">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
+                  {loading ? (
+                    <div className="text-sm text-gray-500">Loading...</div>
+                  ) : (
+                    <>
+                      {getRecentPublicationsForArea('Machine Learning Systems').map((pub, index) => (
+                        <div key={index} className="mb-2">
+                          <p className="text-xs text-gray-600 line-clamp-1">
+                            {pub.title} ({pub.year}, {pub.venue})
+                          </p>
+                        </div>
+                      ))}
+                      <Link 
+                        to="/publications?area=Machine Learning Systems"
+                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
+                      >
+                        View all Machine Learning Systems publications →
+                      </Link>
+                    </>
+                  )}
+                </div>
               </motion.div>
 
               {/* Autonomous Agency */}
@@ -109,12 +238,36 @@ function Research() {
                 <p className="text-gray-600 mb-4">
                   Building intelligent systems that can adapt and operate safely in real-world environments.
                 </p>
-                <ul className="text-sm text-gray-500 space-y-1">
+                <ul className="text-sm text-gray-500 space-y-1 mb-6">
                   <li>• Safety-critical systems</li>
                   <li>• Real-time adaptation</li>
                   <li>• Embodied AI</li>
                   <li>• Generative co-design</li>
                 </ul>
+                
+                {/* Recent Publications */}
+                <div className="border-t border-gray-200 pt-4">
+                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
+                  {loading ? (
+                    <div className="text-sm text-gray-500">Loading...</div>
+                  ) : (
+                    <>
+                      {getRecentPublicationsForArea('Autonomous Agents').map((pub, index) => (
+                        <div key={index} className="mb-2">
+                          <p className="text-xs text-gray-600 line-clamp-1">
+                            {pub.title} ({pub.year}, {pub.venue})
+                          </p>
+                        </div>
+                      ))}
+                      <Link 
+                        to="/publications?area=Autonomous Agents"
+                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
+                      >
+                        View all Autonomous Agents publications →
+                      </Link>
+                    </>
+                  )}
+                </div>
               </motion.div>
             </div>
           </div>

@@ -92,6 +92,7 @@ function Publications() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [cacheInfo, setCacheInfo] = useState<{ lastUpdated: Date | null; expiresAt: Date | null; isExpired: boolean }>({ lastUpdated: null, expiresAt: null, isExpired: true });
 
   const loadPublications = async (forceRefresh = false) => {
     try {
@@ -117,6 +118,7 @@ function Publications() {
       
       setPublications(classifiedPubs);
       setScholarStats(stats);
+      setCacheInfo(getCacheInfo());
     } catch (err) {
       console.error('Error in loadPublications:', err);
       if (err instanceof Error) {
@@ -132,6 +134,7 @@ function Publications() {
 
   useEffect(() => {
     loadPublications();
+    setCacheInfo(getCacheInfo());
   }, []);
 
   const handleRefresh = () => {
@@ -224,8 +227,17 @@ function Publications() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Publications</h1>
             <div className="w-24 h-1 bg-[#A51C30]"></div>
             <p className="text-lg text-gray-600 mt-6 max-w-3xl">
-              Browse the full archive of my publications, filterable by my core research areas.
+              This work often bridges multiple disciplines. The full archive of publications is filterable by core research areas.
             </p>
+          </div>
+
+          {/* Cache Last Updated */}
+          <div className="mb-4 text-sm text-gray-500">
+            {cacheInfo.lastUpdated ? (
+              <>Last updated: {cacheInfo.lastUpdated.toLocaleString()}</>
+            ) : (
+              <>Last updated: Unknown</>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -293,6 +305,9 @@ function Publications() {
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* All Publications Section */}
           <div>
+            <p className="text-sm text-gray-500 italic mb-4">
+              *Please note: Research areas are automatically generated and may not be perfectly accurate.
+            </p>
             {/* Area Filters */}
             <div className="flex flex-wrap justify-start gap-2 mb-8">
               {['All', ...Object.keys(publicationsByArea)].map((area) => (

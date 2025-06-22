@@ -38,10 +38,12 @@ const classifyResearchArea = (publication: Publication): string => {
       'chip', 'silicon', 'fpga', 'asic', 'multicore', 'parallel'
     ],
     
-    'Autonomous Systems': [
-      'autonomous', 'robot', 'robotics', 'uav', 'drone', 'vehicle', 'navigation',
+    'Autonomous Agents': [
+      'autonomous', 'robot', 'robotics', 'agent', 'uav', 'drone', 'vehicle', 'navigation',
       'control', 'sensing', 'perception', 'planning', 'ros', 'operating system',
-      'fault', 'safety', 'reliability', 'real-time'
+      'fault', 'safety', 'reliability', 'real-time', 'multi-agent', 'coordination',
+      'decision making', 'embodied', 'generative', 'co-design', 'safety-critical',
+      'adaptation', 'physical interaction', 'runtime', 'feedback loop'
     ],
     
     'Mobile Computing': [
@@ -115,26 +117,69 @@ const classifyResearchArea = (publication: Publication): string => {
   return bestArea || 'Systems & Software';
 };
 
+const parseDBLPXML = (xmlText: string): Publication[] => {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+  const publications: Publication[] = [];
+
+  const publicationTypes = ['article', 'inproceedings', 'book', 'incollection', 'proceedings', 'phdthesis', 'mastersthesis'];
+
+  xmlDoc.querySelectorAll('r > *').forEach((item, index) => {
+    if (publicationTypes.includes(item.tagName)) {
+      try {
+        const title = item.querySelector('title')?.textContent || 'Untitled';
+        
+        const authors: string[] = Array.from(item.querySelectorAll('author')).map(
+          (author) => author.textContent || ''
+        );
+        
+        const venue = item.querySelector('journal')?.textContent || item.querySelector('booktitle')?.textContent || 'Unknown Venue';
+        const year = parseInt(item.querySelector('year')?.textContent || new Date().getFullYear().toString(), 10);
+        const type = item.tagName;
+        const url = item.querySelector('url')?.textContent || undefined;
+        const ee = item.querySelector('ee')?.textContent || undefined;
+
+        const pub: Publication = {
+          title,
+          authors,
+          venue,
+          year,
+          type,
+          url,
+          ee,
+        };
+        
+        pub.area = classifyResearchArea(pub);
+        publications.push(pub);
+
+      } catch (pubError) {
+        console.error(`Error processing publication XML node ${index + 1}:`, pubError);
+      }
+    }
+  });
+
+  return publications;
+};
+
 export const fetchDBLPData = async (): Promise<Publication[]> => {
   try {
-    console.log('Fetching DBLP data...');
+    console.log('Fetching DBLP data from XML source...');
     
-    // Use the exact query that works in browser
-    const query = 'author:Vijay_Janapa_Reddi';
-    const url = `https://dblp.org/search/publ/api?q=${encodeURIComponent(query)}&format=json&h=200`;
+    // Using the recommended PID-based URL for stability
+    const dblpPid = '88/2610'; 
+    const url = `https://dblp.org/pid/${dblpPid}.xml`;
     
     console.log('DBLP API URL:', url);
     
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        // DBLP XML API doesn't require specific headers but good practice to have a User-Agent
         'User-Agent': 'Mozilla/5.0 (compatible; Academic Website)',
       },
     });
     
     console.log('DBLP Response status:', response.status);
-    console.log('DBLP Response headers:', Object.fromEntries(response.headers.entries()));
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -143,77 +188,11 @@ export const fetchDBLPData = async (): Promise<Publication[]> => {
     }
     
     const responseText = await response.text();
-    console.log('Raw DBLP Response:', responseText.substring(0, 500) + '...');
+    console.log('Raw DBLP XML Response received.');
+
+    const publications = parseDBLPXML(responseText);
     
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('Failed to parse DBLP response as JSON:', parseError);
-      console.error('Response text:', responseText);
-      throw new Error('Invalid JSON response from DBLP API');
-    }
-    
-    console.log('Parsed DBLP Response structure:', {
-      hasResult: !!data.result,
-      hasHits: !!data.result?.hits,
-      hasHit: !!data.result?.hits?.hit,
-      hitType: Array.isArray(data.result?.hits?.hit) ? 'array' : typeof data.result?.hits?.hit
-    });
-    
-    if (!data.result?.hits?.hit) {
-      console.warn('No publications found in DBLP response');
-      console.log('Full response:', data);
-      return [];
-    }
-    
-    const hits = Array.isArray(data.result.hits.hit) ? data.result.hits.hit : [data.result.hits.hit];
-    console.log(`Processing ${hits.length} publication hits`);
-    
-    const publications: Publication[] = hits.map((hit: any, index: number) => {
-      try {
-        const info = hit.info;
-        console.log(`Processing publication ${index + 1}:`, {
-          title: info.title,
-          hasAuthors: !!info.authors,
-          venue: info.venue || info.journal || info.booktitle,
-          year: info.year
-        });
-        
-        // Handle authors - can be string, object, or array
-        let authors: string[] = [];
-        if (info.authors?.author) {
-          if (Array.isArray(info.authors.author)) {
-            authors = info.authors.author.map((a: any) => 
-              typeof a === 'string' ? a : (a.text || a['#text'] || String(a))
-            );
-          } else {
-            const author = info.authors.author;
-            authors = [typeof author === 'string' ? author : (author.text || author['#text'] || String(author))];
-          }
-        }
-        
-        const pub: Publication = {
-          title: info.title || 'Untitled',
-          authors: authors,
-          venue: info.venue || info.journal || info.booktitle || 'Unknown Venue',
-          year: parseInt(info.year) || new Date().getFullYear(),
-          type: info.type || 'article',
-          url: info.url,
-          ee: info.ee
-        };
-        
-        // Classify research area
-        pub.area = classifyResearchArea(pub);
-        
-        return pub;
-      } catch (pubError) {
-        console.error(`Error processing publication ${index + 1}:`, pubError);
-        return null;
-      }
-    }).filter(Boolean) as Publication[];
-    
-    console.log(`Successfully parsed ${publications.length} publications`);
+    console.log(`Successfully parsed ${publications.length} publications from XML.`);
     
     // Sort by year (most recent first)
     publications.sort((a, b) => b.year - a.year);
@@ -248,10 +227,10 @@ export const fetchDBLPData = async (): Promise<Publication[]> => {
         title: "The Role of Edge Computing in Machine Learning",
         authors: ["Vijay Janapa Reddi", "Naveen Kumar", "Stefan Hadjis", "Andrew Howard", "Peter Warden", "Pete Warden", "David Kanter", "Markus Nagel", "Johan Nilsson", "Jungwook Park", "Dilip Sequeira", "Abhishek Sur", "Tao Wang", "Martin Wicke", "Animesh Garg", "Yuchen Zhou"],
         venue: "IEEE Micro",
-        year: 2021,
+        year: 2020,
         type: "article",
-        url: "https://dblp.org/rec/journals/micro/ReddiKHWHWKN22",
-        ee: "https://doi.org/10.1109/MM.2021.3061394"
+        url: "https://dblp.org/rec/journals/micro/ReddiKHHSWKWN20",
+        ee: "https://doi.org/10.1109/MM.2020.2974844"
       }
     ];
   }
