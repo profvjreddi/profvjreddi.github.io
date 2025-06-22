@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/vijay-profile.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vijay Reddi | Harvard University</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      /**
+       * DO NOT REMOVE
+       * Sends client-side errors to the chariot-logger defined in vite.config.ts
+       */
+      if ("%MODE%" === "development") {
+        // Send to logger and notify parent
+        const sendError = (error) => {
+          if (!error?.message) return; // only log errors with a message
+
+          fetch("/@chariot-logger", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(error),
+          }).catch(() => {});
+          window.parent.postMessage("error", "*");
+        };
+
+        // Catch all errors
+        window.addEventListener("error", (e) => sendError(e), true);
+        window.addEventListener(
+          "unhandledrejection",
+          (e) => sendError(e),
+          true
+        );
+
+        // Catch console.error
+        const originalError = console.error;
+        console.error = function (...args) {
+          originalError.apply(console, args);
+          sendError({ type: "console", args });
+        };
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
