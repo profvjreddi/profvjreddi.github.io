@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/site">
       <Layout>
         <Routes>
           {/* Define all routes here */}
