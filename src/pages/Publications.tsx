@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
 import { getCachedPublications, getCacheInfo, refreshCache } from '../utils/dblpCache';
 import { getCachedScholarStats, getScholarCacheInfo } from '../utils/googleScholar';
+import WordCloud from '../components/WordCloud';
 
 interface Publication {
   title: string;
@@ -86,13 +88,16 @@ const getVenueColor = (venue: string): string => {
 };
 
 function Publications() {
+  const [searchParams] = useSearchParams();
   const [publications, setPublications] = useState<Publication[]>([]);
   const [scholarStats, setScholarStats] = useState<GoogleScholarStats | null>(null);
-  const [selectedArea, setSelectedArea] = useState<string>('All');
+  const [selectedArea, setSelectedArea] = useState<string>(searchParams.get('area') || 'All');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [cacheInfo, setCacheInfo] = useState<{ lastUpdated: Date | null; expiresAt: Date | null; isExpired: boolean }>({ lastUpdated: null, expiresAt: null, isExpired: true });
+  const [showWordCloud, setShowWordCloud] = useState<boolean>(false);
+  const [wordCloudTemplate, setWordCloudTemplate] = useState<'harvard' | 'modern' | 'academic' | 'minimal' | 'rainbow' | 'sunset' | 'ocean' | 'forest'>('rainbow');
 
   const loadPublications = async (forceRefresh = false) => {
     try {
@@ -143,9 +148,11 @@ function Publications() {
 
   const myNames = [
     "Vijay Janapa Reddi",
-    "Vijay J. Reddi",
+    "Vijay J. Reddi", 
     "V. Janapa Reddi",
-    "V. J. Reddi"
+    "V. J. Reddi",
+    "Vijay Reddi",
+    "V. Reddi"
     // Add any other common variations you publish under
   ];
 
@@ -228,6 +235,7 @@ function Publications() {
             <div className="w-24 h-1 bg-[#A51C30]"></div>
             <p className="text-lg text-gray-600 mt-6 max-w-3xl">
               This work often bridges multiple disciplines. The full archive of publications is filterable by core research areas.
+              *Please note: Research areas are automatically generated and may not be perfectly accurate.
             </p>
           </div>
 
@@ -305,9 +313,33 @@ function Publications() {
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* All Publications Section */}
           <div>
-            <p className="text-sm text-gray-500 italic mb-4">
-              *Please note: Research areas are automatically generated and may not be perfectly accurate.
-            </p>
+            {/* Word Cloud Toggle */}
+            <div className="mb-6 text-center">
+              <button
+                onClick={() => setShowWordCloud(!showWordCloud)}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              >
+                {showWordCloud ? 'Hide' : 'Show'} Keyword Cloud
+                <svg className={`ml-2 w-4 h-4 transition-transform ${showWordCloud ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Word Cloud */}
+            {showWordCloud && (
+              <div className="mb-8">
+                <WordCloud 
+                  publications={publications} 
+                  width={600} 
+                  height={300}
+                  className="mx-auto"
+                  selectedArea={selectedArea}
+                  template="rainbow"
+                />
+              </div>
+            )}
+            
             {/* Area Filters */}
             <div className="flex flex-wrap justify-start gap-2 mb-8">
               {['All', ...Object.keys(publicationsByArea)].map((area) => (

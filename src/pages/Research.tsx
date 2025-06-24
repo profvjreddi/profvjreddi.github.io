@@ -115,9 +115,7 @@ function Research() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">Research</h1>
             <div className="w-24 h-1 bg-[#A51C30]"></div>
             <p className="text-lg text-gray-600 mt-6 max-w-3xl">
-              Advancing intelligence at the edge, from sensors to systems, to enable safe, efficient, and autonomous behavior in real-world environments.
-              These systems span autonomous robots to agentic platforms that sense, learn, and act intelligently.
-              This work is grounded in system-level thinking that bridges architecture, learning algorithms, and embodied decision-making.
+              Advancing intelligence at the edge—from sensors to autonomous systems—through integrated hardware and software co-design, algorithmic innovation, and embodied decision-making.
             </p>
           </div>
         </div>
@@ -151,29 +149,12 @@ function Research() {
                   <li>• Performance analysis</li>
                 </ul>
                 
-                {/* Recent Publications */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
-                  {loading ? (
-                    <div className="text-sm text-gray-500">Loading...</div>
-                  ) : (
-                    <>
-                      {getRecentPublicationsForArea('Computer Architecture').map((pub, index) => (
-                        <div key={index} className="mb-2">
-                          <p className="text-xs text-gray-600 line-clamp-1">
-                            {pub.title} ({pub.year}, {pub.venue})
-                          </p>
-                        </div>
-                      ))}
-                      <Link 
-                        to="/publications?area=Computer Architecture"
-                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
-                      >
-                        View all Computer Architecture publications →
-                      </Link>
-                    </>
-                  )}
-                </div>
+                <Link 
+                  to="/publications?area=Computer Architecture"
+                  className="text-sm text-[#A51C30] hover:text-[#8B1A2B] font-medium inline-block"
+                >
+                  View all Computer Architecture publications →
+                </Link>
               </motion.div>
 
               {/* ML Systems */}
@@ -198,29 +179,12 @@ function Research() {
                   <li>• Data-centric AI systems</li>
                 </ul>
                 
-                {/* Recent Publications */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
-                  {loading ? (
-                    <div className="text-sm text-gray-500">Loading...</div>
-                  ) : (
-                    <>
-                      {getRecentPublicationsForArea('Machine Learning Systems').map((pub, index) => (
-                        <div key={index} className="mb-2">
-                          <p className="text-xs text-gray-600 line-clamp-1">
-                            {pub.title} ({pub.year}, {pub.venue})
-                          </p>
-                        </div>
-                      ))}
-                      <Link 
-                        to="/publications?area=Machine Learning Systems"
-                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
-                      >
-                        View all Machine Learning Systems publications →
-                      </Link>
-                    </>
-                  )}
-                </div>
+                <Link 
+                  to="/publications?area=Machine Learning Systems"
+                  className="text-sm text-[#A51C30] hover:text-[#8B1A2B] font-medium inline-block"
+                >
+                  View all Machine Learning Systems publications →
+                </Link>
               </motion.div>
 
               {/* Autonomous Agency */}
@@ -245,29 +209,12 @@ function Research() {
                   <li>• Generative co-design</li>
                 </ul>
                 
-                {/* Recent Publications */}
-                <div className="border-t border-gray-200 pt-4">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3">Recent Publications</h4>
-                  {loading ? (
-                    <div className="text-sm text-gray-500">Loading...</div>
-                  ) : (
-                    <>
-                      {getRecentPublicationsForArea('Autonomous Agents').map((pub, index) => (
-                        <div key={index} className="mb-2">
-                          <p className="text-xs text-gray-600 line-clamp-1">
-                            {pub.title} ({pub.year}, {pub.venue})
-                          </p>
-                        </div>
-                      ))}
-                      <Link 
-                        to="/publications?area=Autonomous Agents"
-                        className="text-xs text-[#A51C30] hover:text-[#8B1A2B] font-medium mt-2 inline-block"
-                      >
-                        View all Autonomous Agents publications →
-                      </Link>
-                    </>
-                  )}
-                </div>
+                <Link 
+                  to="/publications?area=Autonomous Agents"
+                  className="text-sm text-[#A51C30] hover:text-[#8B1A2B] font-medium inline-block"
+                >
+                  View all Autonomous Agents publications →
+                </Link>
               </motion.div>
             </div>
           </div>
