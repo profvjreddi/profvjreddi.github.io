@@ -32,7 +32,7 @@ function About() {
           <div className="prose prose-lg max-w-none">
             <div className="bg-gray-50 rounded-lg p-8 mb-8">
               <p className="text-lg leading-relaxed text-gray-700 mb-6">
-                Dr. Prof. Vijay Janapa Reddi is a Gordon McKay Professor of Engineering and Applied Sciences at Harvard University, 
+                Prof. Vijay Janapa Reddi is a Gordon McKay Professor of Engineering and Applied Sciences at Harvard University, 
                 where his research focuses on the intersection of computer architecture, machine learning systems, and autonomous agents. 
                 His multidisciplinary expertise drives advancements in efficient and intelligent computing systems across scales, 
                 from mobile and edge platforms to Internet of Things (IoT) devices.

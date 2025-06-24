@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Updates from '../components/Updates';
 
 function Home() {
   return (
@@ -31,23 +32,7 @@ function Home() {
             </div>
             
             <div className="relative">
-              <div className="bg-gradient-to-br from-[#A51C30] to-[#8B1A2B] rounded-2xl p-8 text-white">
-                <h3 className="text-xl font-semibold mb-4">Latest Updates</h3>
-                <div className="space-y-4">
-                  <div className="bg-white/10 rounded-lg p-4">
-                    <p className="text-sm opacity-90">New paper accepted at NeurIPS 2024</p>
-                    <p className="text-xs opacity-70 mt-1">2 days ago</p>
-                  </div>
-                  <div className="bg-white/10 rounded-lg p-4">
-                    <p className="text-sm opacity-90">Speaking at MIT AI Conference</p>
-                    <p className="text-xs opacity-70 mt-1">1 week ago</p>
-                  </div>
-                  <div className="bg-white/10 rounded-lg p-4">
-                    <p className="text-sm opacity-90">New course: Advanced ML Systems</p>
-                    <p className="text-xs opacity-70 mt-1">2 weeks ago</p>
-                  </div>
-                </div>
-              </div>
+              <Updates maxItems={3} homeStyle={true} />
             </div>
           </div>
         </div>

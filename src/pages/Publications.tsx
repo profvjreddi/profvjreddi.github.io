@@ -235,7 +235,6 @@ function Publications() {
             <div className="w-24 h-1 bg-[#A51C30]"></div>
             <p className="text-lg text-gray-600 mt-6 max-w-3xl">
               This work often bridges multiple disciplines. The full archive of publications is filterable by core research areas.
-              *Please note: Research areas are automatically generated and may not be perfectly accurate.
             </p>
           </div>
 

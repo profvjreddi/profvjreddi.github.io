@@ -484,7 +484,7 @@ function Research() {
                   <div className="ml-20 bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Computer Architecture</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Processor Architecture</h3>
                       </div>
                     </div>
                     <p className="text-gray-600 mb-6 leading-relaxed">

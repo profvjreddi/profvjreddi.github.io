@@ -1,0 +1,30 @@
+updates:
+  - date: "2024-01-15"
+    title: "New Publication"
+    description: "TinyML Benchmarking Framework accepted at ICML 2024. This work establishes standardized evaluation metrics for edge AI systems operating under severe resource constraints."
+    link: "https://arxiv.org/abs/example"
+    link_text: "Read paper"
+    
+  - date: "2023-12-20"
+    title: "Speaking Engagement"
+    description: "Keynote at AI Systems Conference on 'The Future of Embodied Intelligence'. Discussing the challenges and opportunities in deploying intelligent systems in real-world environments."
+    link: ""
+    link_text: ""
+    
+  - date: "2023-11-10"
+    title: "Award Recognition"
+    description: "Received the Best Paper Award at MobiSys for groundbreaking work on energy-efficient mobile architectures that enable continuous AI inference on battery-powered devices."
+    link: ""
+    link_text: ""
+    
+  - date: "2023-10-05"
+    title: "New Collaboration"
+    description: "Excited to announce collaboration with Toyota Research Institute on safety-critical autonomous vehicle systems. Focus on real-time decision making under uncertainty."
+    link: "https://toyota.com/research"
+    link_text: "Learn more"
+    
+  - date: "2023-09-12"
+    title: "Lab Update"
+    description: "Our team published new research on hardware-software co-design for next-generation edge computing platforms. Work spans from chip design to system software."
+    link: ""
+    link_text: "" 
