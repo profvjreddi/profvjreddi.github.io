@@ -21,13 +21,13 @@ function Header() {
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
                 <img 
-                  src="/vijay-profile.jpg" 
-                  alt="Dr. Vijay Janapa Reddi"
+                  src="/profile.jpg" 
+                  alt="Prof. Vijay Janapa Reddi"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <div className="text-gray-900 font-semibold">Dr. Vijay Janapa Reddi</div>
+                <div className="text-gray-900 font-semibold">Prof. Vijay Janapa Reddi</div>
                 <div className="text-gray-600 text-sm">Gordon McKay Professor, Harvard University</div>
               </div>
             </Link>
