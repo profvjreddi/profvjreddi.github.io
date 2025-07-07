@@ -19,7 +19,7 @@ function Home() {
               </h1>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Research at the intersection of computer architecture, machine learning systems, 
-                and autonomous agents, building the foundations from TinyML to the Edge of AI.
+                and autonomous agents, building the computational foundations from TinyML to the Edge of AI.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/research" className="bg-[#A51C30] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#8B1A2B] transition-colors text-center">
