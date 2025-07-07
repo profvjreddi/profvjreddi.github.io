@@ -21,7 +21,7 @@ function Header() {
             <Link to="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200">
                 <img 
-                  src="/profile.jpg" 
+                  src={process.env.NODE_ENV === 'production' ? '/website/images/profile.jpg' : '/images/profile.jpg'}
                   alt="Prof. Vijay Janapa Reddi"
                   className="w-full h-full object-cover"
                 />

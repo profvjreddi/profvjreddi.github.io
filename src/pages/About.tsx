@@ -19,10 +19,10 @@ function About() {
               
               {/* Photo */}
               <div className="flex-shrink-0 mb-6 md:mb-0">
-                <img 
-                  src="/vijay-profile.jpg" 
-                  alt="Prof. Vijay Janapa Reddi" 
-                  className="w-48 h-48 rounded-2xl object-cover shadow-lg mx-auto md:mx-0"
+                <img
+                  src={process.env.NODE_ENV === 'production' ? '/website/images/profile.jpg' : '/images/profile.jpg'}
+                  alt="Prof. Vijay Janapa Reddi"
+                  className="w-32 h-32 rounded-xl object-cover shadow-md"
                 />
               </div>
             </div>
