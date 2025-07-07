@@ -110,7 +110,19 @@ function Updates({ className = '', maxItems, homeStyle = false }: UpdatesProps) 
                   ? `${update.description.substring(0, 80)}...` 
                   : update.description}
               </p>
-              <p className="text-xs opacity-70">{formatDate(update.date)}</p>
+              <div className="flex items-center justify-between">
+                <p className="text-xs opacity-70">{formatDate(update.date)}</p>
+                {update.link && update.link_text && (
+                  <a 
+                    href={update.link}
+                    className="text-xs text-white/80 hover:text-white font-medium transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {update.link_text} →
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>

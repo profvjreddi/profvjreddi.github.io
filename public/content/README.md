@@ -5,9 +5,7 @@ This folder contains YAML files that control content on the website. You can edi
 ## Files
 
 ### `updates.yaml`
-Controls the "Latest Updates" section shown on:
-- Home page (shows first 3 items)
-- News page (shows all items)
+Controls the "Latest Updates" section shown on the home page (shows first 3 items).
 
 ## How to Edit
 
@@ -60,10 +58,11 @@ updates:
 - **Quotes required**: Always wrap text values in quotes
 - **Empty fields**: Use empty quotes `""` for optional fields you don't need
 - **No tabs**: Use spaces only, never tabs
+- **Home page only**: Updates appear in a compact preview on the home page
 
 ## Tips
 
 - Test your YAML syntax with an online YAML validator if you're unsure
-- Keep descriptions clear and informative
+- Keep descriptions clear and informative (will be truncated to ~80 characters on home page)
 - Use consistent date formatting
 - Include links when you want visitors to read more or access related content 
