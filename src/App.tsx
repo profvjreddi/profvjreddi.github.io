@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Research from "./pages/Research";
 import Publications from "./pages/Publications";
 import Teaching from "./pages/Teaching";
-import About from "./pages/About";
+import Profile from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -18,7 +18,7 @@ function App() {
           <Route path="/research" element={<Research />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/teaching" element={<Teaching />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
 
           {/* IMPORTANT: DO NOT place any routes below this. */}

@@ -1,4 +1,4 @@
-function About() {
+function Profile() {
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-gradient-to-br from-gray-50 to-white">
@@ -8,7 +8,7 @@ function About() {
             <div className="flex flex-col md:flex-row md:items-start md:space-x-8">
               {/* Header Text */}
               <div className="flex-grow">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">About</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">Profile</h1>
                 <div className="w-24 h-1 bg-[#A51C30] mb-4"></div>
                 <div className="text-center md:text-left">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Prof. Vijay Janapa Reddi</h2>
@@ -146,4 +146,4 @@ function About() {
   );
 }
 
-export default About;
+export default Profile;

@@ -1,7 +1,21 @@
 import { Link } from 'react-router-dom';
 import Updates from '../components/Updates';
+import { useEffect } from 'react';
 
 function Home() {
+  useEffect(() => {
+    // Prevent duplicate script injection
+    if (document.getElementById('ZpXHwV0pzfjL3T-5KePIb')) return;
+    const script = document.createElement('script');
+    script.innerHTML = `(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="ZpXHwV0pzfjL3T-5KePIb";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();`;
+    script.id = 'chatbase-loader';
+    document.body.appendChild(script);
+    return () => {
+      document.getElementById('chatbase-loader')?.remove();
+      document.getElementById('ZpXHwV0pzfjL3T-5KePIb')?.remove();
+    };
+  }, []);
+
   return (
     <div className="bg-white">
       <div className="relative bg-gradient-to-br from-gray-50 to-white">
@@ -19,7 +33,7 @@ function Home() {
               </h1>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Research at the intersection of computer architecture, machine learning systems, 
-                and autonomous agents, building the computational foundations from TinyML to the Edge of AI.
+                and autonomous agents, building the foundations from TinyML to the Edge of AI.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/research" className="bg-[#A51C30] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#8B1A2B] transition-colors text-center">
@@ -30,13 +44,14 @@ function Home() {
                 </Link>
               </div>
             </div>
-            
             <div className="relative">
               <Updates maxItems={3} homeStyle={true} />
             </div>
           </div>
         </div>
       </div>
+
+      {/* Chatbase Chatbot Section removed, script now injected globally */}
 
       <div className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,7 +61,6 @@ function Home() {
               Exploring the computational challenges and opportunities in modern AI systems
             </p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-[#A51C30] rounded-lg flex items-center justify-center mb-4">
@@ -59,7 +73,6 @@ function Home() {
                 Designing efficient hardware architectures for AI workloads and next-generation computing systems.
               </p>
             </div>
-            
             <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-[#A51C30] rounded-lg flex items-center justify-center mb-4">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,7 +84,6 @@ function Home() {
                 Building scalable, efficient systems for training and deploying machine learning models at scale.
               </p>
             </div>
-            
             <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-[#A51C30] rounded-lg flex items-center justify-center mb-4">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

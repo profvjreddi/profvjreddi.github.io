@@ -8,7 +8,7 @@ function Header() {
     { path: "/research", label: "Research" },
     { path: "/publications", label: "Publications" },
     { path: "/teaching", label: "Teaching" },
-    { path: "/about", label: "About" },
+    { path: "/profile", label: "Profile" },
     { path: "/contact", label: "Contact" },
   ];
 
