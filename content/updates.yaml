@@ -1,0 +1,18 @@
+updates:
+  - date: "2025-06-06"
+    title: "Keynote at MLCommons Rising Stars Workshop"
+    description: "Delivered a keynote titled “Architecture 2.0” at the MLCommons Rising Stars workshop hosted at Meta HQ, exploring the future of ML systems and agentic architectures."
+    link: "https://mlcommons.org/2025/06/2025-mlc-rising-stars/"
+    link_text: "MLCommons News"
+
+  - date: "2025-05-28"
+    title: "Commentary on Harvard NSF Grant Cuts"
+    description: "Spoke publicly about NSF terminating 189 grants at Harvard—three of which were his—causing $191 M in losses and prompting concerns about sustainable edge‑AI research."
+    link: "https://spectrum.ieee.org/harvard-funding-cuts"
+    link_text: "IEEE Spectrum"
+
+  - date: "2025-04-23"
+    title: "New Dataset Project Launched"
+    description: "Launched expansion of QuArch (QA dataset for AI agents in chip design) with 1,500 validated QA pairs and a public leaderboard under Harvard's Edge Computing Lab."
+    link: "https://quarch.ai"
+    link_text: "QuArch"
