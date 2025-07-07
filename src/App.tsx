@@ -10,7 +10,7 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/website' : '/'}>
       <Layout>
         <Routes>
           {/* Define all routes here */}

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://[your-github-username].github.io/site",
+  "homepage": "https://profvjreddi.github.io/website",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
