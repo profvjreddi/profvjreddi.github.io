@@ -1,4 +1,4 @@
-function Profile() {
+function ProfilePage() {
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-gradient-to-br from-gray-50 to-white">
@@ -126,8 +126,10 @@ function Profile() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
-                  href="#" 
+                  href="/Vijay_Janapa_Reddi__CV_.pdf" 
                   className="inline-flex items-center px-6 py-3 bg-[#A51C30] text-white font-medium rounded-lg hover:bg-[#8B1A2B] transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Download CV
                 </a>
@@ -146,4 +148,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ProfilePage;
