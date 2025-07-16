@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FiExternalLink } from 'react-icons/fi';
 import { getCachedPublications, getCacheInfo, refreshCache } from '../utils/dblpCache';
@@ -98,15 +98,26 @@ function Publications() {
   const [cacheInfo, setCacheInfo] = useState<{ lastUpdated: Date | null; expiresAt: Date | null; isExpired: boolean }>({ lastUpdated: null, expiresAt: null, isExpired: true });
   const [showWordCloud, setShowWordCloud] = useState<boolean>(false);
   const [wordCloudTemplate, setWordCloudTemplate] = useState<'harvard' | 'modern' | 'academic' | 'minimal' | 'rainbow' | 'sunset' | 'ocean' | 'forest'>('rainbow');
+  const [statusMessage, setStatusMessage] = useState<{ text: string; type: 'loading' | 'success' | 'error' } | null>(null);
+  const statusTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const loadPublications = async (forceRefresh = false) => {
     try {
       console.log('loadPublications called with forceRefresh:', forceRefresh);
       setError(null);
       setLoading(!forceRefresh); // Only show full-page loader on initial load
-      if (forceRefresh) setRefreshing(true);
+      if (forceRefresh) {
+        setRefreshing(true);
+        setStatusMessage({ text: 'Updating publications...', type: 'loading' });
+      }
 
       console.log('About to fetch publications and stats...');
+      
+      // Show status for Google Scholar fetching
+      if (forceRefresh) {
+        setStatusMessage({ text: 'Fetching Google Scholar data...', type: 'loading' });
+      }
+      
       const [pubs, stats] = await Promise.all([
         forceRefresh ? refreshCache() : getCachedPublications(),
         getCachedScholarStats()
@@ -114,6 +125,10 @@ function Publications() {
       
       console.log('Fetched publications:', pubs);
       console.log('Fetched stats:', stats);
+      
+      if (forceRefresh) {
+        setStatusMessage({ text: 'Processing data...', type: 'loading' });
+      }
       
       const classifiedPubs = pubs.map(pub => ({
         ...pub,
@@ -124,12 +139,28 @@ function Publications() {
       setPublications(classifiedPubs);
       setScholarStats(stats);
       setCacheInfo(getCacheInfo());
+      
+      // Show success message
+      if (forceRefresh) {
+        setStatusMessage({ text: '✓ Data updated successfully', type: 'success' });
+        // Clear any existing timeout and set new one
+        if (statusTimeoutRef.current) clearTimeout(statusTimeoutRef.current);
+        statusTimeoutRef.current = setTimeout(() => setStatusMessage(null), 3000);
+      }
     } catch (err) {
       console.error('Error in loadPublications:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {
         setError('An unknown error occurred');
+      }
+      
+      // Show error message
+      if (forceRefresh) {
+        setStatusMessage({ text: '✗ Update failed', type: 'error' });
+        // Clear any existing timeout and set new one
+        if (statusTimeoutRef.current) clearTimeout(statusTimeoutRef.current);
+        statusTimeoutRef.current = setTimeout(() => setStatusMessage(null), 5000);
       }
     } finally {
       setLoading(false);
@@ -140,6 +171,13 @@ function Publications() {
   useEffect(() => {
     loadPublications();
     setCacheInfo(getCacheInfo());
+    
+    // Cleanup timeout on unmount
+    return () => {
+      if (statusTimeoutRef.current) {
+        clearTimeout(statusTimeoutRef.current);
+      }
+    };
   }, []);
 
   const handleRefresh = () => {
@@ -160,8 +198,10 @@ function Publications() {
     const coAuthors = new Set<string>();
     publications.forEach(pub => {
       pub.authors.forEach(author => {
-        if (!myNames.some(name => author.toLowerCase() === name.toLowerCase())) {
-          coAuthors.add(author);
+        // Normalize author name by trimming whitespace and standardizing spaces
+        const normalizedAuthor = author.trim().replace(/\s+/g, ' ');
+        if (!myNames.some(name => normalizedAuthor.toLowerCase() === name.toLowerCase())) {
+          coAuthors.add(normalizedAuthor);
         }
       });
     });
@@ -279,6 +319,22 @@ function Publications() {
               )}
               {refreshing ? 'Refreshing...' : 'Refresh Cache'}
             </button>
+            
+            {/* Status Message */}
+            {statusMessage && (
+              <div className={`inline-flex items-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                statusMessage.type === 'loading' 
+                  ? 'bg-blue-50 text-blue-700 border border-blue-200' 
+                  : statusMessage.type === 'success'
+                  ? 'bg-green-50 text-green-700 border border-green-200'
+                  : 'bg-red-50 text-red-700 border border-red-200'
+              }`}>
+                {statusMessage.type === 'loading' && (
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-700 mr-2"></div>
+                )}
+                {statusMessage.text}
+              </div>
+            )}
           </div>
 
           {/* Stats Section */}
