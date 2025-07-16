@@ -303,15 +303,15 @@ function Research() {
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Characterizing safety and efficiency dynamics in autonomous system operation
-                          </li>
-                          <li className="flex items-start">
-                            <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                             Designing architectural frameworks for hardware-software co-design in intelligent systems
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                             Developing toolchains for integrated perception, decision-making, and actuation pipelines
+                          </li>
+                          <li className="flex items-start">
+                            <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                            Characterizing safety and efficiency dynamics in autonomous system operation
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
