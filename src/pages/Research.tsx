@@ -262,7 +262,7 @@ function Research() {
                   <div className="ml-20 bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Embodied & Generative AI Systems</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Agentic AI Systems</h3>
                       </div>
                       <span className="text-xs text-white bg-[#A51C30] px-3 py-1 rounded-full font-medium">
                         Current Focus
@@ -294,28 +294,28 @@ function Research() {
                         className="mt-6 p-6 bg-gray-50 rounded-lg border border-gray-100"
                       >
                         <p className="text-sm text-gray-700 mb-4 italic font-medium">
-                          <strong className="text-gray-900">Approach:</strong> Treats embodied and generative intelligence as a converged systems problem—requiring coordination across runtime adaptation, physical interaction, and automated system synthesis.
+                          <strong className="text-gray-900">Approach:</strong> Investigating execution blueprints and architectural foundations that enable autonomous agents to operate effectively, with emphasis on understanding safety-efficiency dynamics and designing comprehensive frameworks for system realization.
                         </p>
                         <ul className="text-sm text-gray-600 space-y-3">
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Adaptive execution frameworks for agents interacting with real-world environments
+                            Execution blueprints and architectures for agentic system deployment
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Safety–efficiency tradeoffs in runtime autonomy for robotics and embodied platforms
+                            Characterizing safety and efficiency dynamics in autonomous system operation
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Generative methods for hardware/software co-design (e.g., automated pipeline or chip synthesis)
+                            Designing architectural frameworks for hardware-software co-design in intelligent systems
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Toolchains that support real-time perception, actuation, and feedback loops
+                            Developing toolchains for integrated perception, decision-making, and actuation pipelines
                           </li>
                           <li className="flex items-start">
                             <div className="w-1.5 h-1.5 bg-[#A51C30] rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                            Evaluation frameworks for intelligent physical systems in safety-critical and uncertain conditions
+                            Creating evaluation frameworks and benchmarks for agentic system performance assessment
                           </li>
                         </ul>
                       </motion.div>
