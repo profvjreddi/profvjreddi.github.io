@@ -411,7 +411,7 @@ function Research() {
                   <div className="ml-20 bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Mobile & Embedded Computing</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Mobile Computing</h3>
                       </div>
                     </div>
                     <p className="text-gray-600 mb-6 leading-relaxed">
@@ -484,7 +484,7 @@ function Research() {
                   <div className="ml-20 bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Processor Architecture</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Microprocessor Design</h3>
                       </div>
                     </div>
                     <p className="text-gray-600 mb-6 leading-relaxed">
@@ -557,7 +557,7 @@ function Research() {
                   <div className="ml-20 bg-white rounded-xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-shadow">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">Compilers</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">Compilation Technology</h3>
                       </div>
                     </div>
                     <p className="text-gray-600 mb-6 leading-relaxed">
@@ -637,7 +637,7 @@ function Research() {
                       <p className="text-lg text-[#A51C30] font-semibold mt-1 mb-6">How It All Connects</p>
                       <p className="text-gray-700 max-w-4xl leading-relaxed mb-10">
                         Each research phase built systematically toward intelligent systems that can operate
-                        autonomously in the real world. From dynamic compilation tools to embodied AI, the common
+                        autonomously in the real world. From compilation tools to agentic AI systems, the common
                         thread is treating complex systems as coordination problems that span multiple layers of the
                         computing stack.
                       </p>
