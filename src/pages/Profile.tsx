@@ -126,7 +126,7 @@ function ProfilePage() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
-                  href="/Vijay_Janapa_Reddi__CV_.pdf" 
+                  href={process.env.NODE_ENV === 'production' ? '/homepage/documents/cv.pdf' : '/documents/cv.pdf'} 
                   className="inline-flex items-center px-6 py-3 bg-[#A51C30] text-white font-medium rounded-lg hover:bg-[#8B1A2B] transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
