@@ -20,7 +20,7 @@ function ProfilePage() {
               {/* Photo */}
               <div className="flex-shrink-0 mb-6 md:mb-0">
                 <img
-                  src={process.env.NODE_ENV === 'production' ? '/website/images/profile.jpg' : '/images/profile.jpg'}
+                  src={process.env.NODE_ENV === 'production' ? '/homepage/images/profile.jpg' : '/images/profile.jpg'}
                   alt="Prof. Vijay Janapa Reddi"
                   className="w-32 h-32 rounded-xl object-cover shadow-md"
                 />

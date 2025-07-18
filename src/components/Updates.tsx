@@ -28,7 +28,7 @@ function Updates({ className = '', maxItems, homeStyle = false }: UpdatesProps) 
     const loadUpdates = async () => {
       try {
         setLoading(true);
-        const base = process.env.NODE_ENV === 'production' ? '/website' : '';
+        const base = process.env.NODE_ENV === 'production' ? '/homepage' : '';
         const response = await fetch(`${base}/content/updates.yaml`);
         if (!response.ok) {
           throw new Error('Failed to load updates');
